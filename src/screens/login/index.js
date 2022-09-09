@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform } from 'react-native';
+import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
 
 
 const Login = ({navigation}) => {
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [data, setData] = useState({});
-
+    const [SecondDatas, setSecondDatas] = useState();
 
     const onSubmitHandler = () => {
       var myHeaders = new Headers();
@@ -29,22 +28,24 @@ const Login = ({navigation}) => {
         redirect: 'follow'
       };
 
-      fetch("https://appforlogin.herokuapp.com/api/login", requestOptions)
-      .then(response => response.json())
-      .then((json) => {
-        setData(json)
-        console.log('data^^^^^^^^^^^',data)
-        navigation.navigate("Home", {
-                data
-            })
-      })
+      fetch("https://instaprojectapp.herokuapp.com/api/login", requestOptions)
+        .then(response => response.json())
+        .then((result) => {
+            if (!result.message) {
+                navigation.navigate("Home")
+                setSecondDatas(result);
+                console.log('ma data', SecondDatas)
+            } else {
+            Alert.alert(
+                "Identifiants incorrects",
+                "Nom d’utilisateur ou mot de passe incorrect"
+            );
+            }
+            console.log("Patience");
+        })
       .catch((error) => console.error(error))
     
     };
-
-    const getMessage = () => {
-        navigation.navigate("Home")
-    }
 
     return (
         <ImageBackground source={require('../../assests/img.jpg')} style={styles.image}>
