@@ -14,12 +14,16 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from "./src/screens/home";
 import Login from "./src/screens/login";
 
+//custom import
+import { AppProvider } from "./src/context/AppContext";
+
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-            <NavigationContainer>
+    <AppProvider>
+      <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name={"Login"}
@@ -37,5 +41,6 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </AppProvider>
   );
 }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
-
+import { AppContext } from '../context/AppContext';
 
 const Login = ({navigation}) => {
+    const {data, setData} = useContext(AppContext)
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
