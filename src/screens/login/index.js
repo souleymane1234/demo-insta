@@ -6,7 +6,7 @@ const Login = ({navigation}) => {
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [SecondDatas, setSecondDatas] = useState();
+    const [SecondDatas, setSecondDatas] = useState([]);
 
     const onSubmitHandler = () => {
       var myHeaders = new Headers();
@@ -32,9 +32,9 @@ const Login = ({navigation}) => {
         .then(response => response.json())
         .then((result) => {
             if (!result.message) {
-                navigation.navigate("Home")
-                setSecondDatas(result);
-                console.log('ma data', SecondDatas)
+                navigation.navigate("Home", {
+                    data: result
+                });
             } else {
             Alert.alert(
                 "Identifiants incorrects",

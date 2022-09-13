@@ -5,7 +5,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const Home = ({route}) => {
+const Home = ({route, navigation}) => {
+  const { data } = route.params;
 
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
@@ -14,30 +15,7 @@ const Home = ({route}) => {
     const [isLogin, setIsLogin] = useState([]);
 
 
-    const onSubmitHandler = () => {
-        var myHeaders = new Headers();
-        myHeaders.append("Cache-Control", "no-cache");
-        myHeaders.append("Accept", "*/*");
-        myHeaders.append("Accept-Encoding", "gzip, deflate");
-        myHeaders.append("Connection", "keep-alive");
-        myHeaders.append("Content-Type", "application/json");
-
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        redirect: 'follow'
-        };
-
-        fetch("https://instaprojectapp.herokuapp.com/api/login", requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .catch(error => console.log('error', error));
-    
-    };
-      useEffect(() => {
-        onSubmitHandler();
-    }, [onSubmitHandler]);
-    console.log('la data est maintenat', isLogin)
+    console.log('la data est maintenat', data)
 
     return (
             <View style={styles.container}>
