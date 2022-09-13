@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { StatusBar, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Dimensions, ScrollView } from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const Home = ({route, navigation}) => {
-  const { data } = route.params;
+//custm import context
+import { AppContext } from '../../context/AppContext';
 
+const Home = ({route, navigation}) => {
+  const {data} = useContext(AppContext)
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
 
     const [message, setMessage] = useState('');
     const [isLogin, setIsLogin] = useState([]);
 
-
-    console.log('la data est maintenat', data)
+    useEffect(() => {
+      console.log("----------okkkkk----", data)
+    }, [])
+    
+    console.log('la data est maintenat', data.following_count)
 
     return (
             <View style={styles.container}>
@@ -23,8 +28,8 @@ const Home = ({route, navigation}) => {
             <View style={styles.header}>
                 <StatusBar animated={true} backgroundColor="#76BAFF" />
                 <View style={styles.headerLogo}>
-                    <Text style={styles.logo}>BOCOUM</Text>
-                    <Text style={styles.logo}>SERVICES</Text>
+                    <Text style={styles.logo}>INSTA</Text>
+                    <Text style={styles.logo}>PROJECT</Text>
                 </View>
                 <View style={{ justifyContent: "center", flexDirection: "row" }}>
                     <TouchableOpacity underlayColor="transparent">
@@ -41,20 +46,38 @@ const Home = ({route, navigation}) => {
         </View>
         <ScrollView>
             <View style={styles.categoryHeaderView}>
-                <Text style={styles.categoryText}>Categories</Text>
+                <Text style={styles.categoryText}>Welcome {data.full_name} </Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
                 <TouchableOpacity style={styles.card}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
-                        <Text style={{fontSize: 14, fontWeight: 'bold'}}>following_count</Text>
-                        <Text>hello</Text>
+                        <Text style={{fontSize: 14, fontWeight: 'bold'}}>account_type</Text>
+                        <Icon
+                        style={{ justifyContent: "center"}}
+                        name="cards-heart"
+                        size={25}
+                        color="red"
+                        pack="material"
+                    />
                     </View>
-                    <View>
-                        <Text> {isLogin.following_count} </Text>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.account_type} </Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.card}>
-
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
+                        <Text style={{fontSize: 14, fontWeight: 'bold'}}>country_code</Text>
+                        <Icon
+                        style={{ justifyContent: "center"}}
+                        name="cards-heart"
+                        size={25}
+                        color="red"
+                        pack="material"
+                    />
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.country_code} </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </ScrollView>

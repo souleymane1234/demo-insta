@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 
 const Login = ({navigation}) => {
     const {data, setData} = useContext(AppContext)
@@ -32,10 +32,10 @@ const Login = ({navigation}) => {
       fetch("https://instaprojectapp.herokuapp.com/api/login", requestOptions)
         .then(response => response.json())
         .then((result) => {
+            setData(result)
             if (!result.message) {
-                navigation.navigate("Home", {
-                    data: result
-                });
+
+                navigation.navigate("Home");
             } else {
             Alert.alert(
                 "Identifiants incorrects",
