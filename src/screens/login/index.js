@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { ImageBackground, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Alert } from 'react-native';
 import { AppContext } from '../../context/AppContext';
+import OrientationLoadingOverlay from "react-native-orientation-loading-overlay";
 
 const Login = ({navigation}) => {
     const {data, setData} = useContext(AppContext)
@@ -8,6 +9,7 @@ const Login = ({navigation}) => {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [SecondDatas, setSecondDatas] = useState([]);
+    const [Spinner, setSpinner] = React.useState(false);
 
     const onSubmitHandler = () => {
       var myHeaders = new Headers();
@@ -28,34 +30,47 @@ const Login = ({navigation}) => {
         body: raw,
         redirect: 'follow'
       };
-
+      setSpinner(!Spinner);
       fetch("https://instaprojectapp.herokuapp.com/api/login", requestOptions)
         .then(response => response.json())
         .then((result) => {
-            setData(result)
+            setSpinner(!Spinner);
             if (!result.message) {
-
+                setSpinner(false);
+                setData(result)
                 navigation.navigate("Home");
+                setSpinner(false);
             } else {
-            Alert.alert(
-                "Identifiants incorrects",
-                "Nom d’utilisateur ou mot de passe incorrect"
-            );
+                setSpinner(false);
+                Alert.alert(
+                    "Identifiants incorrects",
+                    "Nom d’utilisateur ou mot de passe incorrect"
+                );
             }
             console.log("Patience");
         })
       .catch((error) => console.error(error))
     
     };
+      const Loader = (
+    <OrientationLoadingOverlay
+      visible={Spinner}
+      color="white"
+      indicatorSize="large"
+      messageFontSize={10}
+      message="Veillez patienter un moment!!"
+    />
+  );
 
     return (
         <ImageBackground source={require('../../assests/img.jpg')} style={styles.image}>
+            {Loader}
             <View style={styles.card}>
                 <Text style={styles.heading}>Connect API</Text>
                 <View style={styles.form}>
                     <View style={styles.inputs}>
                         <TextInput style={styles.input} placeholder="Username" autoCapitalize="none" onChangeText={setName}></TextInput>
-                        <TextInput style={styles.input} placeholder="pass" autoCapitalize="none" onChangeText={setPassword}></TextInput>
+                        <TextInput style={styles.input} placeholder="pass" autoCapitalize="none" onChangeText={setPassword} secureTextEntry></TextInput>
                         <TouchableOpacity style={styles.button} onPress={() => onSubmitHandler()}>
                             <Text style={styles.buttonText}>Done</Text>
                         </TouchableOpacity>

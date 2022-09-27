@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StatusBar, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Dimensions, ScrollView } from 'react-native';
+import { StatusBar, View, Text, StyleSheet, TouchableOpacity, TextInput, Platform, Dimensions, ScrollView , Image} from 'react-native';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const windowWidth = Dimensions.get("window").width;
@@ -20,6 +20,7 @@ const Home = ({route, navigation}) => {
       console.log("----------okkkkk----", data)
     }, [])
     
+    
     console.log('la data est maintenat', data.following_count)
 
     return (
@@ -28,37 +29,37 @@ const Home = ({route, navigation}) => {
             <View style={styles.header}>
                 <StatusBar animated={true} backgroundColor="#76BAFF" />
                 <View style={styles.headerLogo}>
-                    <Text style={styles.logo}>INSTA</Text>
-                    <Text style={styles.logo}>PROJECT</Text>
+                    <Text style={styles.logo}>{data.username}</Text>
                 </View>
                 <View style={{ justifyContent: "center", flexDirection: "row" }}>
                     <TouchableOpacity underlayColor="transparent">
-                    <Icon
-                        style={{ justifyContent: "center", top: 10 }}
-                        name="account-circle"
-                        size={45}
-                        color="#000"
-                        pack="material"
-                    />
+                                  <Image
+                          style={{ width: 100, height: 100, borderRadius: 30 }}
+                          source={{
+                            uri: data.profile_pic_url,
+                          }}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
         </View>
         <ScrollView>
             <View style={styles.categoryHeaderView}>
-                <Text style={styles.categoryText}>Welcome {data.full_name} </Text>
             </View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
                 <TouchableOpacity style={styles.card}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
-                        <Text style={{fontSize: 14, fontWeight: 'bold'}}>account_type</Text>
-                        <Icon
-                        style={{ justifyContent: "center"}}
-                        name="cards-heart"
-                        size={25}
-                        color="red"
-                        pack="material"
-                    />
+                        <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'capitalize'}}>account type</Text>
+                        <View style={styles.viewIconRed}>
+                          <Icon
+                            style={{ alignSelf: "center"}}
+                            name="account"
+                            size={25}
+                            color="red"
+                            pack="material"
+                          />
+                        </View>
+   
                     </View>
                     <View style={{margin: 10}}>
                         <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.account_type} </Text>
@@ -66,17 +67,91 @@ const Home = ({route, navigation}) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.card}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
-                        <Text style={{fontSize: 14, fontWeight: 'bold'}}>country_code</Text>
-                        <Icon
-                        style={{ justifyContent: "center"}}
-                        name="cards-heart"
-                        size={25}
-                        color="red"
-                        pack="material"
-                    />
+                        <Text style={{fontSize: 14, fontWeight: 'bold', textTransform: 'capitalize'}}>username</Text>
+                        <View style={styles.viewIconRed}>
+                             <Icon
+                            style={{ alignSelf: 'center'}}
+                            name="account-check"
+                            size={25}
+                            color="red"
+                            pack="material"
+                        />
+                        </View>
                     </View>
                     <View style={{margin: 10}}>
-                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.country_code} </Text>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.username} </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                <TouchableOpacity style={styles.card}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
+                        <Text style={{fontSize: 12, fontWeight: 'bold', textTransform: 'capitalize'}}>following</Text>
+                        <View style={styles.viewIconRed}>
+                          <Icon
+                            style={{ alignSelf: "center"}}
+                            name="account-group"
+                            size={25}
+                            color="red"
+                            pack="material"
+                          />
+                        </View>
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.following_count} </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
+                        <Text style={{fontSize: 12, fontWeight: 'bold', textTransform: 'capitalize'}}>total clips count</Text>
+                        <View style={styles.viewIconBlue}>
+                          <Icon
+                          style={{ alignSelf: "center"}}
+                          name="clipboard-text-play"
+                          size={25}
+                          color="#76BAFF"
+                          pack="material"
+                          />
+                        </View>
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.total_clips_count} </Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+            <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10}}>
+                <TouchableOpacity style={styles.card}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
+                        <Text style={{fontSize: 12, fontWeight: 'bold', textTransform: 'capitalize'}}>follower</Text>
+                        <View style={styles.viewIconBlue}>
+                          <Icon
+                          style={{ alignSelf: "center"}}
+                          name="account-circle-outline"
+                          size={25}
+                          color="#76BAFF"
+                          pack="material"
+                          />
+                        </View>
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.follower_count} </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', margin: 10, marginBottom:20}}>
+                        <Text style={{fontSize: 12, fontWeight: 'bold', textTransform: 'capitalize'}}>total igtv videos</Text>
+                        <View style={styles.viewIconBlue}>
+                          <Icon
+                          style={{ alignSelf: "center"}}
+                          name="video-outline"
+                          size={25}
+                          color="#76BAFF"
+                          pack="material"
+                          />
+                        </View>
+                    </View>
+                    <View style={{margin: 10}}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}> {data.total_igtv_videos} </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -124,6 +199,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', 
     borderRadius: 10, 
     elevation: 4
+  },
+  viewIconRed: {
+    backgroundColor: '#ffcaca',
+    width: 35, 
+    height: 35, 
+    justifyContent: "center",
+    borderRadius: 10
+  },
+    viewIconBlue: {
+    backgroundColor: '#bedbfa',
+    width: 35, 
+    height: 35, 
+    justifyContent: "center",
+    borderRadius: 10
   }
 });
 
